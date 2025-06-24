@@ -13,7 +13,7 @@ app.use(cors());
 
 const textList = [];
 
-blogRouter.post('/texts', (req, res) => {
+blogRouter.post('/text', (req, res) => {
     const { title, content, status, author} = req.body;
 
     const newText = {
@@ -29,15 +29,48 @@ blogRouter.post('/texts', (req, res) => {
     res.status(201).json({message: `Texto ${title} foi criado com sucesso!`})
 });
 
-blogRouter.get('/texts', (req, res) => {
+blogRouter.get('/text', (req, res) => {
     res.json(textList);
 });
 
-blogRouter.get('/text', (req, res) => {
+blogRouter.get('/text/:id', (req, res) => {
     const id = req.query.id;
     const textFound = textList.find(text => text.id === id)
     res.json(textFound);
 });
+
+blogRouter.patch('/text/:id', (req, res) => {
+    const id = parseInt(req.params);
+    const {title, content, status, author} = req.body;
+
+    const textFound = textList.find(text => text.id === id);
+
+    if (title != null){
+        textFound.title = title
+    };
+
+    if(content != null){
+        textFound.content = content;
+    }
+
+    if(status != null){
+        textFound.status = status;
+    }
+
+    if(author != null){
+        textFound.author = author
+    }
+
+    res.json({message: `Texto com id ${id} editado com sucesso!!`})
+});
+
+blogRouter.delete('/text/:id', (req, res) => {
+    const {id} = req.params;
+
+    const listUpdated = DataTransferItemList.filter(text => text.id === id);
+
+    res.json(listUpdated)
+})
 
 app.use(blogRouter);
 app.listen(PORT, console.log(`Porta rodando na porta ${PORT}!!!`))
