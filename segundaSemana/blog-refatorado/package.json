@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "ts-node-dev --respawn --transpile-only src/index.ts"
+    "start": "ts-node-dev --respawn --transpile-only src/index.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "description": "",
   "dependencies": {
     "cors": "^2.8.5",
